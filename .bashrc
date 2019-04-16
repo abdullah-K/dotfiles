@@ -175,6 +175,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # aliases
 alias ..="cd .."
+alias trash="gvfs-trash"
 ###-begin-npm-completion-###
 #
 # npm command completion script
