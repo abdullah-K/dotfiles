@@ -70,8 +70,8 @@ ZSH_THEME="bureau"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# load platform-specific plugins
 
+# load platform-specific plugins
 case `uname` in
   Darwin)
     plugins=(
