@@ -86,8 +86,8 @@ case `uname` in
     plugins=(
         git 
         sudo 
-        npm 
-	z
+	z 
+#	nvm
     )
   ;;
 esac
@@ -122,3 +122,57 @@ source $ZSH/oh-my-zsh.sh
 
 
 #PROMPT=%{$fg[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%}
+
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#nvm() {
+#    unset -f nvm
+#    export NVM_DIR=~/.nvm
+#    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#    nvm "$@"
+#}
+ 
+#node() {
+#    unset -f node
+#    export NVM_DIR=~/.nvm
+#    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#    node "$@"
+#}
+ 
+#npm() {
+#    unset -f npm
+#    export NVM_DIR=~/.nvm
+#    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#    npm "$@"
+#}
+
+
+# Defer initialization of nvm until nvm, node or a node-dependent command is
+# run. Ensure this block is only run once if .bashrc gets sourced multiple times
+# by checking whether __init_nvm is a function.
+if [ -s "$HOME/.nvm/nvm.sh" ] && [ ! "$(type -f __init_nvm)" = function ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+  declare -a __node_commands=('nvm' 'node' 'npm' 'yarn' 'gulp' 'grunt' 'webpack', 'nodemon')
+  function __init_nvm() {
+    for i in "${__node_commands[@]}"; do unalias $i; done
+    . "$NVM_DIR"/nvm.sh
+    unset __node_commands
+    unset -f __init_nvm
+  }
+  for i in "${__node_commands[@]}"; do alias $i='__init_nvm && '$i; done
+fi
+
+#nvm use v13.5.0
+#nvm use v13.5.0 >/dev/null 2>&1
+
+alias trash="gvfs-trash"
+alias e="exit"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/abdullah/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/abdullah/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/abdullah/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/abdullah/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
